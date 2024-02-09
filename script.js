@@ -14,39 +14,38 @@ function getComputerChoice() {
 
 
 function playRound(playerSelection, computerSelection) {
-    // Making the players input case insensitive.
-    let playerChoice = playerSelection.toLowerCase();
-
     // Confirmation of players choices.
-    console.log(`Your choice: ${playerChoice}`);
+    console.log(`Your choice: ${playerSelection}`);
+
     console.log(`The computer chooses ${computerSelection}!`);
+
 
     
     // Deciding who wins the round
-    if (playerChoice === computerSelection ) {
+    if (playerSelection === computerSelection ) {
         return "Draw!"
 
     // Rock
-    } else if (playerChoice === "rock" && computerSelection === "paper") {
+    } else if (playerSelection === "rock" && computerSelection === "paper") {
         computerScore++;
         return "You lose! Paper beats rock!"
-    } else if (playerChoice === "rock" && computerSelection === "scissors") {
+    } else if (playerSelection === "rock" && computerSelection === "scissors") {
         playerScore++;
         return "You win! Rock beats scissors!"
 
         // Paper
-    } else if (playerChoice === "paper" && computerSelection === "rock") {
+    } else if (playerSelection === "paper" && computerSelection === "rock") {
         playerScore++;
         return "You win! Paper beats rock!"
-    } else if (playerChoice === "paper" && computerSelection === "scissors") {
+    } else if (playerSelection === "paper" && computerSelection === "scissors") {
         computerScore++;
         return "You lose! Scissors beats paper!"
 
         // Scissors
-    } else if (playerChoice === "scissors" && computerSelection === "rock") {
+    } else if (playerSelection === "scissors" && computerSelection === "rock") {
         computerScore++;
         return "You lose! Rock beats scissors!"
-    } else if (playerChoice === "scissors" && computerSelection === "paper") {
+    } else if (playerSelection === "scissors" && computerSelection === "paper") {
         playerScore++;
         return "You win! Scissors beats paper!"
     } else {
@@ -63,15 +62,33 @@ function playGame() {
     // Start a new round until there's been 5 rounds.
     while (count < 6) {
         // Display the round number, get both player's choices and play the round.
-        console.log(`Round ${count}: `)
+        console.log(`******** Round ${count} ******** `)
 
         const computerSelection = getComputerChoice();
-        const playerSelection = prompt("Enter your choice: Rock, Paper or Scissors!: ");
+        let playerSelection = prompt(`Round ${count} \n\nEnter your choice: Rock, Paper or Scissors!: `);
+        
+        
 
-        console.log(playRound(playerSelection, computerSelection));
+        if (playerSelection !== null) {
+            // Making the players input case insensitive.
+            let playerChoiceLowerCase = playerSelection.toLowerCase();
 
-        //When round is finished increase the round number by 1.
-        count++;
+            // Make sure the player has entered a valid choice
+            while (playerChoiceLowerCase != "rock" && playerChoiceLowerCase != "paper" && playerChoiceLowerCase != "scissors") {
+                    playerSelection = prompt("Enter a valid choice: Rock, Paper or Scissors!: ");
+                    playerChoiceLowerCase = playerSelection.toLowerCase(); // Remember the make the new entry case insensitive
+            }
+
+            console.log(playRound(playerChoiceLowerCase, computerSelection));
+
+            //When round is finished increase the round number by 1.
+            count++;
+
+            console.log();
+        } else {
+            console.clear();
+            break;
+        }
     }
 
     
@@ -82,6 +99,12 @@ function playGame() {
         console.log(`FINAL SCORE: ${playerScore}:${computerScore}, YOU LOSE THE GAME, `)
     } else {
         console.log(`FINAL SCORE: ${playerScore}:${computerScore}, IT'S A DRAW`)
+    }
+
+    playAgain = confirm("Do you want to play again?")
+
+    if (playAgain) {
+        playGame();
     }
 }
 
