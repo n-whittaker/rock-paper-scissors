@@ -1,0 +1,44 @@
+* {
+    /* border: 1px solid black; */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.resultsBox {
+    width: 400px;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.choices, .score, .buttons {
+    width: 400px;;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+
+.resultContainer {
+    height: 70px;
+}
+
+.buttons {
+    margin: 20px;
+}
+
+.choice {
+    width: 100px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.result {
+    text-align: center;
+}
+
+
+

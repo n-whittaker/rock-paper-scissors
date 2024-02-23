@@ -1,3 +1,14 @@
+let playerScore = 0;
+let computerScore = 0;
+
+const userChoiceText = document.querySelector(".userChoice");
+const computerChoiceText = document.querySelector(".computerChoice");
+
+const userScoreText = document.querySelector(".userScore");
+const computerScoreText = document.querySelector(".computerScore");
+
+const buttons = document.querySelectorAll(".btn"); // Buttons is a node list
+const result = document.querySelector(".result");
 
 function getComputerChoice() {
     let randomNumber = Math.random().toFixed(2);    // Generate random number and put into decimal variable
@@ -12,17 +23,14 @@ function getComputerChoice() {
     }
 }
 
-
 function playRound(playerSelection, computerSelection) {
     // Confirmation of players choices.
-    console.log(`Your choice: ${playerSelection}`);
-
-    console.log(`The computer chooses ${computerSelection}!`);
-
-
+    userChoiceText.textContent = playerSelection;
+    computerChoiceText.textContent = computerSelection;
     
+
     // Deciding who wins the round
-    if (playerSelection === computerSelection ) {
+    if (playerSelection === computerSelection) {
         return "Draw!"
 
     // Rock
@@ -51,61 +59,63 @@ function playRound(playerSelection, computerSelection) {
     } else {
         return "Check your spelling!"
     }
+
+    
+
 }
 
-let playerScore = 0;
-let computerScore = 0;
+function updateScore() {
+    if (playerScore === 5) {
+        result.textContent = "You win the game! Choose option to play again"
+        result.style.color = "#7CFC00";
+        playerScore = 0;
+        computerScore = 0;
+        
+    } else if (computerScore === 5){
+        result.textContent = "You lose, Computer wins! Choose option to play again";
+        result.style.color = "#FA1A00";
+        playerScore = 0;
+        computerScore = 0;
+    }
 
-function playGame() {
-    let count = 1;
     
-    // Start a new round until there's been 5 rounds.
-    while (count < 6) {
-        // Display the round number, get both player's choices and play the round.
-        console.log(`******** Round ${count} ******** `)
 
-        const computerSelection = getComputerChoice();
-        let playerSelection = prompt(`Round ${count} \n\nEnter your choice: Rock, Paper or Scissors!: `);
-        
-        
+    userScoreText.textContent = playerScore;
+    computerScoreText.textContent = computerScore;
+}
 
-        if (playerSelection !== null) {
-            // Making the players input case insensitive.
-            let playerChoiceLowerCase = playerSelection.toLowerCase();
 
-            // Make sure the player has entered a valid choice
-            while (playerChoiceLowerCase != "rock" && playerChoiceLowerCase != "paper" && playerChoiceLowerCase != "scissors") {
-                    playerSelection = prompt("Enter a valid choice: Rock, Paper or Scissors!: ");
-                    playerChoiceLowerCase = playerSelection.toLowerCase(); // Remember the make the new entry case insensitive
-            }
 
-            console.log(playRound(playerChoiceLowerCase, computerSelection));
+// For every button in the node list
+for (const btn of buttons) {
+    
+    btn.addEventListener('click', (event) => { // When it's clicked, check which class it contains
+        result.style.color = "black";
+        computerSelection = getComputerChoice();
 
-            //When round is finished increase the round number by 1.
-            count++;
+        if (btn.classList.contains("rock")) {
+            result.textContent = playRound("rock", computerSelection); // and play a round, using that selection
+            
+        } else if (btn.classList.contains("paper")) {
+            result.textContent = playRound("paper", computerSelection);
 
-            console.log();
-        } else {
-            console.clear();
-            break;
+        } else if (btn.classList.contains("scissors")) {
+            result.textContent = playRound("scissors", computerSelection);
         }
-    }
 
+        updateScore();
+
+    })
     
-    // Display win/lose/draw message based upon result, as well as final score.
-    if (playerScore > computerScore) {
-        console.log(`FINAL SCORE: ${playerScore}:${computerScore}, YOU WIN THE GAME, `)
-    } else if (playerScore < computerScore) {
-        console.log(`FINAL SCORE: ${playerScore}:${computerScore}, YOU LOSE THE GAME, `)
-    } else {
-        console.log(`FINAL SCORE: ${playerScore}:${computerScore}, IT'S A DRAW`)
-    }
-
-    playAgain = confirm("Do you want to play again?")
-
-    if (playAgain) {
-        playGame();
-    }
 }
 
-playGame();
+
+
+
+
+
+
+
+
+
+
