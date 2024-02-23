@@ -10,6 +10,8 @@ const computerScoreText = document.querySelector(".computerScore");
 const buttons = document.querySelectorAll(".btn"); // Buttons is a node list
 const result = document.querySelector(".result");
 
+const body = document.querySelector("body");
+
 function getComputerChoice() {
     let randomNumber = Math.random().toFixed(2);    // Generate random number and put into decimal variable
     let computerChoice = "";     // Create a string variable
@@ -67,13 +69,13 @@ function playRound(playerSelection, computerSelection) {
 function updateScore() {
     if (playerScore === 5) {
         result.textContent = "You win the game! Choose option to play again"
-        result.style.color = "#7CFC00";
+        body.style = "background-color: #4fa883;"
         playerScore = 0;
         computerScore = 0;
         
     } else if (computerScore === 5){
         result.textContent = "You lose, Computer wins! Choose option to play again";
-        result.style.color = "#FA1A00";
+        body.style = "background-color: #d26161;"
         playerScore = 0;
         computerScore = 0;
     }
@@ -90,7 +92,7 @@ function updateScore() {
 for (const btn of buttons) {
     
     btn.addEventListener('click', (event) => { // When it's clicked, check which class it contains
-        result.style.color = "black";
+        body.style = "background-color: #c7c7c7;"
         computerSelection = getComputerChoice();
 
         if (btn.classList.contains("rock")) {
